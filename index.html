@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+    <head>
+        <title>Αρχική Σελίδα</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="index.css">
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>Αρχική Σελίδα</h1>
+        </header>
+        <main>
+            <article id="inputData">
+                <section>
+                    <h3>On this form you add the products lists was buy by customers.</h3>
+                    <p>Can you add 1 list at the time and the products must be split with "," character.</p>
+                    <p>When complete the list, then press the "Add List" button and a new record (for the list) will saves automaticly.</p>
+                    <p>Number of Lists:</p>
+                    <p id="listCountNumber"></p>
+                </section>
+                <form>
+                    <textarea rows="15" cols="75" id="importedListArea" placeholder="">
+                    </textarea>
+                </form>
+                <section>
+                    <button onclick="addNewList()">Add List</button>
+                </section>
+            </article>
+            <article id="previewData">
+                <section>
+                    <h3>Preview Data</h3>
+                    <p>On this segment prints the products from the lists the users imports.</p>
+                    <p>When you see the products are correct, then he press the button "Calculate Associations" for the algorithm execution.</p>
+                    <p>Number of Products:</p>
+                    <p id="fProductsNumber"></p>
+                </section>
+                <section>
+                    <textarea rows="15" cols="75" id="printListArea" readonly>
+                    </textarea>
+                </section>
+                <section>
+                    <button onclick="moveToNextPage()">Calculate Associations</button>
+                </section>
+            </article>
+        </main>
+        <footer>
+            <section>Provided by George Denesidis</section>
+        </footer>
+    </body>
+</html>
