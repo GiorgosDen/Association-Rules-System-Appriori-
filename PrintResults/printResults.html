@@ -2,7 +2,7 @@
     <head>
         <title>Αποτελέσματα</title>
         <meta charset="UTF-8">
-        <!-- <link rel="stylesheet" href="applyAlg.css">-->
+        <link rel="stylesheet" href="printResults.css">
         <script src="printResults.js"></script>
     </head>
     <body>
@@ -10,10 +10,22 @@
             <h1>Εμφάνιση Αποτελεσμάτων</h1>
         </header>
         <main>
-            <article>
+            <article id="itemsetsArea">
                 <h1>Itemsets</h1>
-                <p id="p"></p>
+                <div id="itemstesCards"></div>  
             </article>
+            <div class="slideButtons">
+                <button onclick="upItemsets(-1)">&#10094;</button>
+                <button onclick="upItemsets(1)">&#10095;</button>
+            </div>
+            <article id="rulesArea">
+                <h1>Rules</h1>
+                <div id="rulesCard"></div>  
+            </article>
+            <div class="slideButtons">
+                <button onclick="upRules(-1)">&#10094;</button>
+                <button onclick="upRules(1)">&#10095;</button>
+            </div>
         </main>
         <footer>
             <section>Provided by George Denesidis</section>

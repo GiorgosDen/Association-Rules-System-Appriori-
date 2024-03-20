@@ -4,6 +4,10 @@ var numberOfLists=0;
 var minconf=0;//minimum confindence
 var minsup=0;//minimum support
 var K_itemsets= new Array();//row 0: 1-gramms,row1: 2-gramms....row k-1: k-gramms
+var K_itemsetsScore = new Array();//Keeps support of any itemset
+var AssociationsRules = new Array();//AssociationRules = {X , Y}
+var AssociationRulesScore = new Array();//Keeps conf for any rule
+var kLevelIndex =0;
 window.onload = function (){
     products = sessionStorage.getItem('products').split(',');
     lists = sessionStorage.getItem('lists').split('.');
@@ -60,7 +64,7 @@ function Apriori(){
     }
     //if we have relevant 2-itemsets then calculate 2+-itemsets
     //until not found relevant k-itemsets
-    let kLevelIndex = 2;
+    kLevelIndex = 2;
     if(K_itemsets[1].length>0){
         do{
             load3plusItemsets(kLevelIndex);//k-1 as parametre (zero-index)
@@ -77,10 +81,16 @@ function Apriori(){
         }while(K_itemsets[kLevelIndex-1].length>0);
     }
     //When Appriori ends (have all relevants itemsets)
+    //Rules Function
+    findAssociationRules();
     //pass itemsets to another page
     let jsonItems = JSON.stringify(K_itemsets);
+    let jsonItemsScores = JSON.stringify(K_itemsetsScore);
     sessionStorage.setItem("itemsets",jsonItems);
-    sessionStorage.setItem("kLevels",kLevelIndex);
+    sessionStorage.setItem("kLevels",kLevelIndex-1);
+    sessionStorage.setItem("itemsetsScores",jsonItemsScores);
+    sessionStorage.setItem("rules",AssociationsRules);
+    sessionStorage.setItem("rulesScores",AssociationRulesScore);
     location.href="../PrintResults/printResults.html";
 }
 
@@ -145,6 +155,8 @@ function load3plusItemsets(indexK){
 
 //delete k-itemsets with support<minsup
 function deleteNonSupportK_itemsets(kLevel){
+    
+    let scores = new Array();
     //The first number of (kLevel+1)-itemsets number
     //kLevel: for k-itemsets kLevel== k-1
     let i=0;
@@ -173,14 +185,106 @@ function deleteNonSupportK_itemsets(kLevel){
         //support of k-gramm: list it appears/ all lists
         //if kitemset support < minsup, then remove it
         //if delete a element i keeps the same
+        let supp = (sectionList.length/numberOfLists);
         if((sectionList.length/numberOfLists)<(minsup/100)){
             K_itemsets[kLevel].splice(i,1);
         }else{
+            scores.push(supp);
             i++;
         }
 
     }
+    //! Save support from relevant itemsets
+    //pass scores to main array (K_itemsetsScore)
+    K_itemsetsScore.push(scores);
 }
+
+
+function findAssociationRules(){
+    //Association rule X->Y, X&Y is itemsets
+    //Step 1: Find all subsets
+    //Step 2: Find all the subset combinations
+    //Step 3: Select the rules with confindence >=minconf
+
+    for(i=0; i<kLevelIndex; i++){
+        for(j=0; j<K_itemsets[i].length; j++){
+            //Step 1.
+            let subsets = Array.from(findSubSets(K_itemsets[i][j].split(",")));
+            console.log(K_itemsets[i].length+" " + i +","+j+" "+K_itemsets[i][j]);}}
+    console.log("=======================");
+    //for any itemset
+    for(let i=0; i<kLevelIndex; i++){
+        for(let j=0; j<K_itemsets[i].length; j++){
+            //Step 1.
+            
+            let subsets = Array.from(findSubSets(K_itemsets[i][j].split(",")));
+            console.log(K_itemsets[i].length + " " + i + "," + j + " " + K_itemsets[i][j]);
+
+        // remove 1st subset ([])
+        // remove last subset (all itemset)
+        let modifiedSubsets = subsets.slice(1, subsets.length - 1);
+        
+
+            //step 2.
+            for(let k=0; k< modifiedSubsets.length; k++){
+                //split k subset and get their support
+                let sub1 =  modifiedSubsets[k]; 
+                sub1Support = new Array();
+                sub1Support = getSupport(sub1[0]);
+                for(let a=1; a<sub1.length; a++){
+                    sub1Support = sub1Support.filter(element => getSupport(sub1[a]).includes(element));
+                }
+                //console.log("Find support from "+sub1[0]+" "+sub1Support.length+" as "+sub1Support);
+                for(let l=0; l<subsets.length; l++){
+                    let unionL = Array.from(subsets[k].filter(element => subsets[l].includes(element))).length;
+                    if(k!=l && unionL==0 && subsets[k]!=""){
+                        //split l subset and get their support
+                        let sub2 = subsets[l];
+                        sub2Support = new Array();
+                        sub2Support = getSupport(sub2[0]);
+                        for(let a=1; a<sub2.length; a++){
+                            sub2Support = sub2Support.filter(element => getSupport(sub2[a]).includes(element));
+                        }
+
+                        //Step 3. sectionList =sectionList.filter(element => curList.includes(element));
+                        //get section support (list with sub1 & sub2)
+                        sectionSupport = new Array();
+                        sectionSupport = sub1Support.filter(element => sub2Support.includes(element));
+                        if((sectionSupport.length/sub1Support.length)>=minconf){
+                            //then add the new rule 
+                            AssociationsRules.push(subsets[k].toString()+"=>"+subsets[l].toString());
+                            //Keep conf of the new rule
+                            AssociationRulesScore.push((sectionSupport.length/sub1Support.length));
+                        }
+                    }
+
+                }
+            }
+
+        }
+    
+    }
+    console.log("The Association Rules:");
+    for(i=0; i<AssociationsRules.length; i++){
+        console.log(i+1+" Rule: "+AssociationsRules[i]+" conf: "+AssociationRulesScore[i]);
+    }
+}
+
+//Find all subsets from array
+function findSubSets(aArray){
+    
+    let subsets = [[]];
+
+    for (let el of aArray) {
+        const last = subsets.length-1;
+        for (let n = 0; n <= last; n++) {
+            subsets.push( [...subsets[n], el] );
+        }
+    }
+    
+    return subsets;
+}
+
 
 //get support of k-itemset/1-itemset (the indexes of lists, their contains the kgramm)
 function getSupport(kgramm){

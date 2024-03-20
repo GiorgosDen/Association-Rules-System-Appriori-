@@ -1,0 +1,55 @@
+body{
+    background-color: rgb(255, 235, 205);
+    display: flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border: 2px solid black;
+}
+header{
+    background-color: rgb(255, 235, 205);
+    text-align: center;
+}
+
+main{
+    width: 70%;
+    text-align: center;
+}
+
+article{
+    text-align: center;
+    width: 100%;
+}
+
+.slideButtons{
+    text-align: center;
+}
+
+footer{
+    background-color: rgb(255, 235, 205);
+    width: 100%;
+    border: 2px solid black;
+}
+#itemstesCards{
+    display: flex;
+    flex-direction: row;
+}
+.ruleCard{
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+.itemsCard{
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+section{
+    margin: 2%;
+    padding: 1%;
+    background-color: aliceblue;
+    width: 50%;
+    height: 100%;
+}
