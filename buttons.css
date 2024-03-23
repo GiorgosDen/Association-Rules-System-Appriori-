@@ -1,0 +1,23 @@
+button{
+    width: 150px;
+    height: 25px;
+    text-align: center;
+    cursor: pointer;
+    margin: 1%;
+    background-color:rgb(150, 150, 255);
+    border: none;
+    border-radius: 25px;
+  box-shadow: 0 2px #999;
+}
+
+button:hover {background-color: rgb(50, 50, 255)}
+
+button:active {
+    background-color: rgb(50, 50, 255);
+  box-shadow: 0 5px #27323d;
+  transform: translateY(2px);
+}
+
+#arrow{
+    width: 50px;
+}

@@ -1,6 +1,6 @@
 
 body{
-    background-color: rgb(255, 235, 205);
+    background-image: url("ProjectIcons/indexBackground.jpeg");
     padding-left: 1%;
     padding-right: 1%;
     display: grid;
@@ -8,16 +8,21 @@ body{
     grid-template-columns: repeat(2, 45% [col-start]);
     column-gap: 5%;
     row-gap: 5%;
-    
-}
-header{
-    background-color: rgb(255, 235, 205);
-    grid-row-start: 1;
-    grid-column-start: 1;
-    grid-column-end: 3;
-    text-align: center;
 }
 
+article{
+    background-color: rgb(230, 240, 245,0.7);
+}
+header{
+    grid-row-start: 1;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    text-align: center;
+    color: rgb(150, 170, 255);
+}
+p{
+    margin-left: 2%;
+}
 main{
     grid-row-start: 2;
     grid-row-end: 3;
@@ -28,8 +33,8 @@ main{
     gap: 15%;
 }
 footer{
-    background-color: rgb(255, 235, 205);
     border: 2px solid black;
+    background-color:rgba(150, 170, 255,0.7);
     grid-column-start: 1;
     grid-column-end: 4;
     grid-row-start: 4;

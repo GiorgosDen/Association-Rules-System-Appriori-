@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(255, 235, 205);
+    background-image: url("..//ProjectIcons/indexBackground.jpeg");
     display: grid;
     grid-template-columns: [col1-start] 10% [col1-end col2-start] 80% [col2-end];
     grid-template-rows: [row1-start] 10% [row1-end row2-start] 65% [row2-end row3-start] 5% [row3-end];
@@ -11,6 +11,7 @@ header{
     grid-column-start: 2;
     grid-column-end: 3;
     text-align: center;
+    color: rgb(150, 170, 255);
 }
 
 main{
@@ -23,13 +24,19 @@ main{
     justify-content: center;
     gap: 15%;
 }
-
+article{
+    background-color: rgb(230, 240, 245,0.7);
+    width: fit-content;
+    height: fit-content;
+    padding: 1%;
+}
 footer{
     border: 2px solid black;
     grid-column-start: 1;
     grid-column-end: 4;
     grid-row-start: 4;
     padding: 1%;
+    background-color: rgba(150, 170, 255,0.7);
 }
 
 textarea{

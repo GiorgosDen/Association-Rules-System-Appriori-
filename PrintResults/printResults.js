@@ -73,12 +73,9 @@ function createItemsetsCard(labelT,dataT){
     //context
     let dataCard = document.createElement("p");
     dataCard.innerHTML = dataT;
-    dataCard.style.background = "red";
-    dataCard.style.border = "solid gray 1px";
     //label
     let labelCard = document.createElement("p");
     labelCard.textContent="itemset - support";
-    labelCard.style.border = "solid gray 2px";
 
     //new section
     let aSection = document.createElement("section");
@@ -89,6 +86,8 @@ function createItemsetsCard(labelT,dataT){
     aSection.appendChild(headerCard);
     aSection.appendChild(labelCard);
     aSection.appendChild(dataCard);
+    aSection.style.width="450px";
+    aSection.style.height="200px";
 
     //Add section to page
     container.appendChild(aSection);
@@ -105,17 +104,16 @@ function createRulesCard(labelT,dataT){
     //context
     let dataCard = document.createElement("p");
     dataCard.innerHTML = dataT;
-    dataCard.style.background = "red";
-    dataCard.style.border = "solid gray 1px";
     //label
     let labelCard = document.createElement("p");
     labelCard.textContent="Rule - Confindence";
-    labelCard.style.border = "solid gray 2px";
 
     //new section
     let aSection = document.createElement("section");
     aSection.style.textAlign = "center";
     aSection.className = "ruleCard";
+    aSection.style.width="450px";
+    aSection.style.height="200px";
 
     //Add header and paragraph into to section
     aSection.appendChild(headerCard);
